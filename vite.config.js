@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig({
   root: fileURLToPath(new URL('.', import.meta.url)),
   plugins: [react()],
-  // GitHub Pages project site path for https://<username>.github.io/homepage/.
-  // If you later bind the custom domain xminstrel.top, change this base to '/'.
-  base: '/homepage/',
+  // Custom domain deployment for https://xminstrel.top/.
+  // If you switch back to https://<username>.github.io/homepage/, change this base to '/homepage/'.
+  base: '/',
 })

@@ -2,6 +2,12 @@
 
 这是 `homepage` 仓库里的个人主页项目，使用 **Vite + React + Tailwind CSS** 构建，并通过 **GitHub Actions + GitHub Pages** 自动部署。
 
+当前站点计划使用自定义域名：
+
+```text
+https://xminstrel.top/
+```
+
 当前站点风格参考了 `mem.ac` / `memset0.github.io` 一类学术个人主页：左侧身份栏、右侧内容流、淡绿色主题、轻量卡片和细分隔线。
 
 ## 技术栈
@@ -19,6 +25,7 @@
 homepage/
 ├─ .github/workflows/deploy.yml   # GitHub Pages 自动部署 workflow
 ├─ assets/images/avatar.png       # 当前头像图片
+├─ public/CNAME                   # GitHub Pages 自定义域名
 ├─ src/
 │  ├─ App.jsx                     # 页面结构和主要内容
 │  ├─ index.css                   # 全局样式、主题色、响应式布局
@@ -43,10 +50,10 @@ npm install
 npm run dev
 ```
 
-当前仓库名是 `homepage`，Vite 的 `base` 是 `/homepage/`，所以本地通常访问：
+现在 `vite.config.js` 的 `base` 是 `/`，所以本地访问：
 
 ```text
-http://127.0.0.1:5173/homepage/
+http://127.0.0.1:5173/
 ```
 
 ## 构建检查
@@ -200,39 +207,53 @@ Settings -> Pages -> Build and deployment -> Source
 GitHub Actions
 ```
 
-## GitHub Pages base 配置
+## 自定义域名配置
 
-当前是项目站点：
-
-```text
-https://<username>.github.io/homepage/
-```
-
-所以 `vite.config.js` 里设置为：
-
-```js
-base: '/homepage/',
-```
-
-如果以后绑定自定义域名 `xminstrel.top`，需要改成：
+当前已经按自定义域名 `xminstrel.top` 配置：
 
 ```js
 base: '/',
 ```
 
-同时在 GitHub Pages 设置 Custom domain，并在 DNS / Cloudflare 中配置域名解析。
-
-如果希望 GitHub Pages 每次部署都保留自定义域名，可以添加：
+并添加了：
 
 ```text
 public/CNAME
 ```
 
-内容为：
+文件内容：
 
 ```text
 xminstrel.top
 ```
+
+还需要在 GitHub 仓库里进入：
+
+```text
+Settings -> Pages -> Custom domain
+```
+
+填写：
+
+```text
+xminstrel.top
+```
+
+DNS / Cloudflare 侧需要把 `xminstrel.top` 指向 GitHub Pages。常见做法是给 apex domain 配置 GitHub Pages 的 A 记录，并按需要配置 `www` 的 CNAME。
+
+如果以后切回项目站点：
+
+```text
+https://<username>.github.io/homepage/
+```
+
+需要把 `vite.config.js` 改回：
+
+```js
+base: '/homepage/',
+```
+
+并删除或停用 GitHub Pages 的 Custom domain。
 
 ## 常用命令
 
